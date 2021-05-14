@@ -27,5 +27,16 @@ it "Should change the board slected number with the player sign" do
 end
 end
 
+describe '#position_taken?' do
+it "Should check if position selected on board is already taken" do
+games.move(0,"O")
+expect(games.position_taken?(0)).to eql(false)
+
+expect(games.position_taken?(1)).to eql(true)
+
+end
+end
+
+
 
 end
