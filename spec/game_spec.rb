@@ -37,6 +37,14 @@ expect(games.position_taken?(1)).to eql(true)
 end
 end
 
+describe '#valid_move?' do
+it 'Should check if input is a number between 1-9 and is not taken by a player' do
+games.move(1,'X')
+expect(games.valid_move?(1)).to eql(false)
+expect(games.valid_move?(0)).to eql(false)
+expect(games.valid_move?(3)).to eql(true)
+end
+end
 
 
 end
