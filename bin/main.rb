@@ -1,4 +1,3 @@
-#!/usr/bin/env ruby
 require './lib/player'
 require './lib/game'
 new_game = Game.new
