@@ -92,5 +92,48 @@ end
 
 end
 
+describe "#current_player_sign" do
 
+
+it 'Current player sign is equal to player1 sign when turn count is even' do
+  games.player1.sign="X"
+games.player2.sign="O"
+  games.move(5,"X")
+games.move(6,"O")
+expect(games.current_player_sign).to eql(games.player1.sign)
+end
+it 'Current player sign is equal to player2 sign when turn count is uneven' do
+  games.player1.sign="X"
+games.player2.sign="O"
+  games.move(5,"X")
+expect(games.current_player_sign).to eql(games.player2.sign)
+end
+
+end
+
+describe "#turn" do
+it "Should display an updated board with the current player selection" do
+  board=  " 1 | X | 3 \n" \
+  "------------\n" \
+  " 4 | 5 | 6 \n" \
+  "------------\n" \
+  " 7 | 8 | 9 \n"
+
+expect(games.turn(1)).to eql(board)
+end
+end
+
+describe "#contains_letter" do 
+it "Checks if input contains a letter from a-z" do
+string1="mario12345"
+string2="13355"
+expect(games.contains_letter(string1)).to eql(true)
+expect(games.contains_letter(string2)).to eql(false)
+
+end
+end
+
+describe "#choices" do
+
+end
 end
