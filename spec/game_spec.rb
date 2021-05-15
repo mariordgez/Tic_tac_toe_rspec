@@ -73,5 +73,24 @@ expect(games.current_player).to eql(games.player2.name)
 end
 
 end
+describe "#other_player" do
+
+
+it 'Other player is equal to player2 name when turn count is even' do
+  games.player1.name="mario"
+games.player2.name="dante"
+  games.move(5,"X")
+games.move(6,"O")
+expect(games.other_player).to eql(games.player2.name)
+end
+it 'Other player is equal to player1 name when turn count is uneven' do
+  games.player1.name="mario"
+games.player2.name="dante"
+  games.move(5,"X")
+expect(games.other_player).to eql(games.player1.name)
+end
+
+end
+
 
 end
