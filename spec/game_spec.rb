@@ -125,15 +125,115 @@ end
 
 describe "#contains_letter" do 
 it "Checks if input contains a letter from a-z" do
-string1="mario12345"
+string1="mario"
 string2="13355"
-expect(games.contains_letter(string1)).to eql(true)
-expect(games.contains_letter(string2)).to eql(false)
+expect(games.contains_letter(string1)).to eql(0)
+expect(games.contains_letter(string2)).to eql(nil)
 
 end
 end
 
 describe "#choices" do
+it "Stores the players selections into an array" do
+games.turn(1)
+games.turn(2)
+games.turn(4)
+games.turn(5)
+games.turn(6)
+games.turn(7)
 
+games.choices
+expect(games.player1.selections).to eql([1, 4, 6])
+expect(games.player2.selections).to eql([2, 5, 7])
 end
+end
+
+describe "#win?" do
+it "Determines winner due to having the top horizontal line" do
+  games.turn(0)
+  games.turn(3)
+  games.turn(1)
+  games.turn(4)
+  games.turn(2)
+  games.choices
+  expect(games.win?).to eql (true)
+end
+it "Determines winner due to having the middle horizontal line" do
+  games.turn(3)
+  games.turn(0)
+  games.turn(4)
+  games.turn(1)
+  games.turn(5)
+  games.choices
+  expect(games.win?).to eql (true)
+end
+it "Determines winner due to having the bottom horizontal line" do
+  games.turn(6)
+  games.turn(0)
+  games.turn(7)
+  games.turn(1)
+  games.turn(8)
+  games.choices
+  expect(games.win?).to eql (true)
+end
+it "Determines winner due to having the first vertical line" do
+  games.turn(0)
+  games.turn(1)
+  games.turn(3)
+  games.turn(2)
+  games.turn(6)
+  games.choices
+  expect(games.win?).to eql (true)
+end
+it "Determines winner due to having the second vertical line" do
+  games.turn(1)
+  games.turn(2)
+  games.turn(4)
+  games.turn(5)
+  games.turn(7)
+  games.choices
+  expect(games.win?).to eql (true)
+end
+it "Determines winner due to having the third vertical line" do
+  games.turn(2)
+  games.turn(1)
+  games.turn(5)
+  games.turn(0)
+  games.turn(8)
+  games.choices
+  expect(games.win?).to eql (true)
+end
+it "Determines winner due to having the first diagonal" do
+  games.turn(0)
+  games.turn(1)
+  games.turn(4)
+  games.turn(2)
+  games.turn(8)
+  games.choices
+  expect(games.win?).to eql (true)
+end
+it "Determines winner due to having the second diagonal" do
+  games.turn(2)
+  games.turn(1)
+  games.turn(4)
+  games.turn(0)
+  games.turn(6)
+  games.choices
+  expect(games.win?).to eql (true)
+end
+it "Returns false since board was filled without a winner" do
+  games.turn(0) 
+  games.turn(1) 
+  games.turn(2)  
+  games.turn(3)
+  games.turn(5)
+  games.turn(4)
+  games.turn(7)
+  games.turn(8)
+  games.turn(6)
+  games.choices
+  expect(games.win?).to eql (false)
+end
+end
+
 end
