@@ -1,6 +1,6 @@
 require_relative '../lib/player'
 class Game
-  attr_accessor :player1, :player2
+  attr_accessor :player1, :player2, :board
 
   def initialize
     @board = [1, 2, 3, 4, 5, 6, 7, 8, 9]
