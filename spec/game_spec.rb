@@ -31,17 +31,25 @@ describe Game do
     it 'Should check if position selected on board is already taken' do
       games.move(0, 'O')
       expect(games.position_taken?(0)).to eql(true)
-
-      expect(games.position_taken?(1)).to eql(false)
+    end
+    it 'Should not allow you to get a position already taken' do
+      games.move(1, 'X')
+      expect(games.position_taken?(1)).not_to eql(false)
     end
   end
 
   describe '#valid_move?' do
     it 'Should check if input is a number between 1-9 and is not taken by a player' do
       games.move(1, 'X')
-      expect(games.valid_move?(1)).to eql(false)
-      expect(games.valid_move?(-1)).to eql(false)
       expect(games.valid_move?(3)).to eql(true)
+    end
+    it 'Should not allow you to get a position already taken' do
+      games.move(1, 'X')
+      expect(games.valid_move?(1)).not_to eql(true)
+    end
+    it 'Should not allow you to choose a number outside of the range 1-9' do
+      games.move(1, 'X')
+      expect(games.valid_move?(-1)).not_to eql(true)
     end
   end
 
@@ -110,14 +118,26 @@ describe Game do
 
       expect(games.turn(1)).to eql(board)
     end
+    it 'Should not return an empty board' do
+      empty_board = " 1 | 2 | 3 \n" \
+      "------------\n" \
+      " 4 | 5 | 6 \n" \
+      "------------\n" \
+      " 7 | 8 | 9 \n"
+
+      expect(games.turn(1)).not_to eql(empty_board)
+    end
   end
 
   describe '#contains_letter' do
     it 'Checks if input contains a letter from a-z' do
       string1 = 'mario'
-      string2 = '13355'
+
       expect(games.contains_letter(string1)).to eql(0)
-      expect(games.contains_letter(string2)).to eql(nil)
+    end
+    it 'Should not return true if string does not have a letter' do
+      string2 = '13355'
+      expect(games.contains_letter(string2)).not_to eql(true)
     end
   end
 
@@ -133,6 +153,12 @@ describe Game do
       games.choices
       expect(games.player1.selections).to eql([1, 4, 6])
       expect(games.player2.selections).to eql([2, 5, 7])
+    end
+    it 'Sould not allow to store the same number multiple times' do
+      games.turn(1)
+      games.choices
+      games.choices
+      expect(games.player1.selections).not_to eql([1, 1])
     end
   end
 
@@ -209,7 +235,7 @@ describe Game do
       games.choices
       expect(games.win?).to eql(true)
     end
-    it 'Returns false since board was filled without a winner' do
+    it 'Should not return true since board was filled without a winner' do
       games.turn(0)
       games.turn(1)
       games.turn(2)
@@ -220,7 +246,7 @@ describe Game do
       games.turn(8)
       games.turn(6)
       games.choices
-      expect(games.win?).to eql(false)
+      expect(games.win?).not_to eql(true)
     end
   end
   describe '#tie?' do
